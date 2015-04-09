@@ -56,7 +56,21 @@ Todos.TodosController = Ember.ArrayController.extend({
     return remaining === 1 ? 'item' : 'items';
   }.property('remaining'),
 
+  hasCompleted: function() {
+    return this.get('completed') > 0;
+  }.property('completed'),
+
+  completed: function() {
+    return this.filterBy('isCompleted', true).get('length');
+  }.property('@each.isCompleted'),
+
   actions: {
+    clearCompleted: function() {
+      var completed = this.filterBy('isCompleted', true);
+      completed.invoke('deleteRecord');
+      completed.invoke('save');
+    },
+
     createTodo: function() {
       // Get the todo title set by the "New Todo" text field
       var title = this.get('newTitle');

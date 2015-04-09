@@ -6,6 +6,12 @@ Todos.Router.map(function() {
   this.resource('todos', { path: '/' });
 });
 
+Todos.TodosRoute = Ember.Route.extend({
+  model: function() {
+    return this.store.find('todo');
+  }
+});
+
 Todos.Todo = DS.Model.extend({
   title: DS.attr('string'),
   isCompleted: DS.attr('boolean')
